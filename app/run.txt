@@ -1,0 +1,10 @@
+Agora você pode executar
+
+Tudo:
+
+python main.py
+python main.py --all
+python main.py --audio
+python main.py --anki
+python main.py --lesson licao_01
+python main.py --audio --lesson licao_01
