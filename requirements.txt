@@ -1,1 +1,1 @@
-gTTS>=2.5.4tqdm>=4.68.3
+gTTS==2.5.4tqdm==4.68.3colorama==0.4.6
