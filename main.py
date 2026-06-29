@@ -8,10 +8,11 @@ from __future__ import annotations
 
 import argparse
 
+from scripts.config import IMPORTS_DIR
+from scripts.importer import LessonImporter
 from scripts.logger import Logger
 from scripts.manager import FlashcardManager
 from scripts.new_lesson import LessonCreator
-
 
 Logger.setup()
 
@@ -29,13 +30,13 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--audio",
         action="store_true",
-        help="(Em desenvolvimento) Gerar apenas os áudios.",
+        help="Gerar apenas os áudios.",
     )
 
     parser.add_argument(
         "--anki",
         action="store_true",
-        help="(Em desenvolvimento) Gerar apenas os arquivos do Anki.",
+        help="Gerar apenas os arquivos do Anki.",
     )
 
     parser.add_argument(
@@ -48,14 +49,21 @@ def create_parser() -> argparse.ArgumentParser:
         "--lesson",
         type=str,
         metavar="NOME",
-        help="(Em desenvolvimento) Processar apenas uma lição.",
+        help="Processar apenas uma lição.",
     )
 
     parser.add_argument(
         "--new",
-        metavar="NOME",
         type=str,
+        metavar="NOME",
         help="Criar uma nova lição.",
+    )
+
+    parser.add_argument(
+        "--import",
+        dest="import_txt",
+        action="store_true",
+        help="Importar arquivos TXT da pasta imports.",
     )
 
     return parser
@@ -70,19 +78,38 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    # --------------------------------------------------
+    # --------------------------------------
     # Criar nova lição
-    # --------------------------------------------------
+    # --------------------------------------
 
-   args = parser.parse_args()
+    if args.new:
 
-if args.new:
-    creator = LessonCreator()
-    creator.create(args.new)
-    return
+        creator = LessonCreator()
 
-manager = FlashcardManager()
-manager.run()
+        creator.create(args.new)
+
+        return
+
+    # --------------------------------------
+    # Importar arquivos TXT
+    # --------------------------------------
+
+    if args.import_txt:
+
+        importer = LessonImporter()
+
+        importer.import_folder(
+            IMPORTS_DIR
+        )
+
+    # --------------------------------------
+    # Executar o gerador
+    # --------------------------------------
+
+    manager = FlashcardManager()
+
+    manager.run()
+
 
 if __name__ == "__main__":
     main()

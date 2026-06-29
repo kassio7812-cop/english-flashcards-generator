@@ -77,7 +77,10 @@ class AudioGenerator:
 
         if not phrase.english.strip():
 
-            self.stats.errors += 1
+            Logger.warning(
+                f"Frase vazia ignorada (ID {phrase.id})"
+            )
+
             return
 
         filename = mp3_filename(

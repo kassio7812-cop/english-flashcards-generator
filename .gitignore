@@ -1,20 +1,25 @@
+# Ambiente virtual
 .venv/
-venv/
 
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 
-logs/
-backup/
-audios/
+# Logs
+logs/*.log
+
+# Áudios gerados
+audio/
+
+# Arquivos Anki gerados
 anki/
-exports/
 
+# Backups
+backup/
+
+# VSCode
 .vscode/
-.idea/
 
-TesteV13/
-Nova pasta/
-
-.DS_Store
+# Windows
 Thumbs.db
+Desktop.ini

@@ -41,6 +41,20 @@ english-flashcards/
 ---
 
 # Instalação
+# Instalação
+
+git clone <repositorio>
+
+cd english-flashcards-generator
+
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+pip install -r requirements.txt
+
+python main.py --all
 
 Clone o projeto:
 
