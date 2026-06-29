@@ -10,6 +10,7 @@ import argparse
 
 from scripts.logger import Logger
 from scripts.manager import FlashcardManager
+from scripts.new_lesson import LessonCreator
 
 
 Logger.setup()
@@ -18,9 +19,6 @@ Logger.setup()
 def create_parser() -> argparse.ArgumentParser:
     """
     Cria o parser da linha de comando.
-
-    Os argumentos já ficam preparados para versões futuras.
-    Atualmente todos executam o processamento completo.
     """
 
     parser = argparse.ArgumentParser(
@@ -53,6 +51,13 @@ def create_parser() -> argparse.ArgumentParser:
         help="(Em desenvolvimento) Processar apenas uma lição.",
     )
 
+    parser.add_argument(
+        "--new",
+        metavar="NOME",
+        type=str,
+        help="Criar uma nova lição.",
+    )
+
     return parser
 
 
@@ -63,8 +68,21 @@ def main() -> None:
 
     parser = create_parser()
 
-    # Mantém compatibilidade futura.
-    parser.parse_args()
+    args = parser.parse_args()
+
+    # --------------------------------------------------
+    # Criar nova lição
+    # --------------------------------------------------
+
+    if args.new:
+
+        LessonCreator().create(args.new)
+
+        return
+
+    # --------------------------------------------------
+    # Executar geração
+    # --------------------------------------------------
 
     manager = FlashcardManager()
 
