@@ -25,6 +25,11 @@ class AnkiGenerator:
     # -------------------------------------------------
 
     def generate(self, lessons):
+        
+        ANKI_DIR.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
 
         Logger.info(
             "Gerando arquivos do Anki."

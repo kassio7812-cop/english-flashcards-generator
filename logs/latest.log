@@ -38,3 +38,22 @@
 2026-06-28 21:33:42,221 | INFO | CSV criado: 002_family_import.csv
 2026-06-28 21:33:42,223 | INFO | CSV criado: 003_travel_import.csv
 2026-06-28 21:33:42,223 | INFO | Arquivos do Anki finalizados.
+2026-06-29 07:47:47,203 | INFO | Iniciando geração dos áudios.
+2026-06-29 07:47:47,204 | INFO | Iniciando geração de áudio.
+2026-06-29 07:47:47,303 | INFO | Geração de áudio concluída.
+2026-06-29 07:47:47,304 | INFO | Áudios finalizados.
+2026-06-29 07:47:47,304 | INFO | Gerando arquivos do Anki.
+2026-06-29 07:47:47,304 | INFO | Gerando arquivos do Anki.
+2026-06-29 07:47:47,306 | INFO | CSV criado: 001_greetings_import.csv
+2026-06-29 07:47:47,307 | INFO | CSV criado: 002_family_import.csv
+2026-06-29 07:47:47,309 | INFO | CSV criado: 003_travel_import.csv
+2026-06-29 07:47:47,309 | INFO | Arquivos do Anki finalizados.
+2026-06-29 08:16:19,450 | INFO | Iniciando geração dos áudios.
+2026-06-29 08:16:19,451 | INFO | Iniciando geração de áudio.
+2026-06-29 08:16:19,471 | INFO | Geração de áudio concluída.
+2026-06-29 08:16:19,471 | INFO | Áudios finalizados.
+2026-06-29 08:16:19,471 | INFO | Gerando arquivos do Anki.
+2026-06-29 08:16:19,472 | INFO | CSV criado: 001_greetings_import.csv
+2026-06-29 08:16:19,472 | INFO | CSV criado: 002_family_import.csv
+2026-06-29 08:16:19,473 | INFO | CSV criado: 003_travel_import.csv
+2026-06-29 08:16:19,473 | INFO | Arquivos do Anki finalizados.

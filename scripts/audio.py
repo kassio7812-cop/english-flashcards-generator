@@ -27,10 +27,13 @@ class AudioGenerator:
 
     def generate(self, lessons):
 
-        Logger.info("Iniciando geração de áudio.")
+        
+        AUDIO_DIR.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
 
         for lesson in lessons:
-
             self.generate_lesson(lesson)
 
         Logger.info("Geração de áudio concluída.")
@@ -43,7 +46,7 @@ class AudioGenerator:
 
         folder.mkdir(
             parents=True,
-            exist_ok=True
+            exist_ok=True,
         )
 
         iterator = lesson.phrases
@@ -51,22 +54,17 @@ class AudioGenerator:
         if self.settings.show_progress:
 
             iterator = tqdm(
-
                 lesson.phrases,
-
                 desc=lesson.name,
-
                 unit="frase",
-
-                colour="green"
-
+                colour="green",
             )
 
         for phrase in iterator:
 
             self.generate_phrase(
                 phrase,
-                folder
+                folder,
             )
 
     # -------------------------------------------------
@@ -76,6 +74,11 @@ class AudioGenerator:
         phrase,
         folder: Path,
     ):
+
+        if not phrase.english.strip():
+
+            self.stats.errors += 1
+            return
 
         filename = mp3_filename(
             phrase.id
@@ -89,28 +92,19 @@ class AudioGenerator:
         ):
 
             self.stats.skipped += 1
-
             return
 
         try:
 
             tts = gTTS(
-
                 text=phrase.english,
-
                 lang=self.settings.voice_lang,
-
                 slow=self.settings.voice_slow,
-
             )
 
             tts.save(str(filepath))
 
             self.stats.generated += 1
-
-            Logger.info(
-                f"Áudio criado: {filename}"
-            )
 
         except Exception as e:
 

@@ -105,16 +105,14 @@ class FlashcardManager:
 
         Console.separator()
 
-        Logger.info(
-            "Gerando arquivos do Anki."
-        )
-
         self.anki.generate(
-            lessons
+        lessons
+
         )
 
         Logger.info(
             "Arquivos do Anki finalizados."
+            
         )
 
         self.stats.stop()
