@@ -1,0 +1,10 @@
+{
+    "voice_lang": "en",
+    "voice_slow": false,
+    "skip_existing_audio": true,
+    "create_backup": true,
+    "keep_backups": 10,
+    "show_progress": true,
+    "anki_separator": ",",
+    "log_level": "INFO"
+}

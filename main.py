@@ -1,0 +1,75 @@
+"""
+main.py
+
+Ponto de entrada do English Flashcards Generator.
+"""
+
+from __future__ import annotations
+
+import argparse
+
+from scripts.logger import Logger
+from scripts.manager import FlashcardManager
+
+
+Logger.setup()
+
+
+def create_parser() -> argparse.ArgumentParser:
+    """
+    Cria o parser da linha de comando.
+
+    Os argumentos já ficam preparados para versões futuras.
+    Atualmente todos executam o processamento completo.
+    """
+
+    parser = argparse.ArgumentParser(
+        prog="English Flashcards Generator",
+        description="Gerador de Flashcards de Inglês",
+    )
+
+    parser.add_argument(
+        "--audio",
+        action="store_true",
+        help="(Em desenvolvimento) Gerar apenas os áudios.",
+    )
+
+    parser.add_argument(
+        "--anki",
+        action="store_true",
+        help="(Em desenvolvimento) Gerar apenas os arquivos do Anki.",
+    )
+
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Gerar todos os arquivos.",
+    )
+
+    parser.add_argument(
+        "--lesson",
+        type=str,
+        metavar="NOME",
+        help="(Em desenvolvimento) Processar apenas uma lição.",
+    )
+
+    return parser
+
+
+def main() -> None:
+    """
+    Executa o programa.
+    """
+
+    parser = create_parser()
+
+    # Mantém compatibilidade futura.
+    parser.parse_args()
+
+    manager = FlashcardManager()
+
+    manager.run()
+
+
+if __name__ == "__main__":
+    main()

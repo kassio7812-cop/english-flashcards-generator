@@ -1,128 +1,119 @@
 """
 audio.py
 
-Gera os áudios das lições.
+Geração de arquivos MP3.
 """
-from tqdm import tqdm
+
 from __future__ import annotations
 
 from pathlib import Path
 
-from scripts.console import Console
-from scripts.csv_reader import CsvReader
-from scripts.settings import Settings
-from scripts.stats import Stats
-from scripts.tts import TTS
+from gtts import gTTS
+from tqdm import tqdm
+
+from scripts.config import AUDIO_DIR
+from scripts.logger import Logger
+from scripts.utils import mp3_filename
 
 
 class AudioGenerator:
 
-    def __init__(
-        self,
-        settings: Settings,
-        stats: Stats,
-    ) -> None:
+    def __init__(self, settings, stats):
 
         self.settings = settings
         self.stats = stats
 
-        self.reader = CsvReader()
-
-        self.tts = TTS(
-            voice=settings.voice,
-            rate=settings.rate,
-            volume=settings.volume,
-        )
+    # -------------------------------------------------
 
     def generate(self, lessons):
 
+        Logger.info("Iniciando geração de áudio.")
+
         for lesson in lessons:
 
-            Console.lesson(lesson.name)
+            self.generate_lesson(lesson)
 
-            self.process_lesson(lesson)
+        Logger.info("Geração de áudio concluída.")
 
-    def process_lesson(self, lesson):
+    # -------------------------------------------------
 
-        lesson.ensure_audio_folder()
+    def generate_lesson(self, lesson):
 
-        phrases = self.reader.read(
-            lesson.csv_file
+        folder = AUDIO_DIR / lesson.name
+
+        folder.mkdir(
+            parents=True,
+            exist_ok=True
         )
 
-        lesson.total_phrases = len(phrases)
+        iterator = lesson.phrases
 
-        self.stats.lessons += 1
+        if self.settings.show_progress:
 
-        self.stats.phrases += lesson.total_phrases
+            iterator = tqdm(
 
-        for phrase in tqdm(
+                lesson.phrases,
 
-    phrases,
+                desc=lesson.name,
 
-    desc=f"🎧 {lesson.name}",
+                unit="frase",
 
-    unit="frase",
+                colour="green"
 
-    ncols=80,
+            )
 
-    colour="green",
+        for phrase in iterator:
 
-):
+            self.generate_phrase(
+                phrase,
+                folder
+            )
 
-    self.process_phrase(
+    # -------------------------------------------------
 
-        lesson,
-
-        phrase,
-
-    )
-
-    def process_phrase(
+    def generate_phrase(
         self,
-        lesson,
         phrase,
+        folder: Path,
     ):
 
-        filename = (
-            f"{phrase['id']:03}.mp3"
+        filename = mp3_filename(
+            phrase.id
         )
 
-        output = (
-            lesson.audio_folder /
-            filename
-        )
+        filepath = folder / filename
 
         if (
-            output.exists()
-            and self.settings.skip_existing
+            self.settings.skip_existing_audio
+            and filepath.exists()
         ):
 
-            lesson.skipped += 1
-
             self.stats.skipped += 1
-
-            Console.skipped(filename)
 
             return
 
         try:
 
-            self.tts.generate(
-                phrase["english"],
-                output,
+            tts = gTTS(
+
+                text=phrase.english,
+
+                lang=self.settings.voice_lang,
+
+                slow=self.settings.voice_slow,
+
             )
 
-            lesson.generated += 1
+            tts.save(str(filepath))
 
             self.stats.generated += 1
 
-            Console.generated(filename)
+            Logger.info(
+                f"Áudio criado: {filename}"
+            )
 
-        except Exception as error:
+        except Exception as e:
 
             self.stats.errors += 1
 
-            Console.error(
-                f"{filename} -> {error}"
-            )
+            Logger.exception(str(e))
