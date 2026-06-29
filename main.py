@@ -74,20 +74,15 @@ def main() -> None:
     # Criar nova lição
     # --------------------------------------------------
 
-    if args.new:
+   args = parser.parse_args()
 
-        LessonCreator().create(args.new)
+if args.new:
+    creator = LessonCreator()
+    creator.create(args.new)
+    return
 
-        return
-
-    # --------------------------------------------------
-    # Executar geração
-    # --------------------------------------------------
-
-    manager = FlashcardManager()
-
-    manager.run()
-
+manager = FlashcardManager()
+manager.run()
 
 if __name__ == "__main__":
     main()

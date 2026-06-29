@@ -1,30 +1,20 @@
-# Ambiente virtual
 .venv/
 venv/
 
-# Python
 __pycache__/
-*.py[cod]
-*.pyo
+*.pyc
 
-# Logs
 logs/
-*.log
-
-# Backups
 backup/
-
-# Arquivos gerados
 audios/
 anki/
 exports/
 
-# IDE
 .vscode/
 .idea/
 
-# Windows
-Thumbs.db
+TesteV13/
+Nova pasta/
 
-# macOS
 .DS_Store
+Thumbs.db

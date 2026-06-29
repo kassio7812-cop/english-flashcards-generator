@@ -1,59 +1,42 @@
 from pathlib import Path
-import re
+import csv
 
 from scripts.config import LESSONS_DIR
 
 
 class LessonCreator:
 
-    def create(self, name: str):
+    def create(self, lesson_name: str):
 
         LESSONS_DIR.mkdir(
             parents=True,
             exist_ok=True,
         )
 
-        files = sorted(
-            LESSONS_DIR.glob("*.csv")
-        )
+        filename = lesson_name.strip()
 
-        number = len(files) + 1
-
-        slug = (
-            name.lower()
-            .strip()
-            .replace(" ", "_")
-        )
-
-        slug = re.sub(
-            r"[^a-z0-9_]",
-            "",
-            slug,
-        )
-
-        filename = f"{number:03d}_{slug}.csv"
+        if not filename.endswith(".csv"):
+            filename += ".csv"
 
         filepath = LESSONS_DIR / filename
 
         if filepath.exists():
-            print("❌ A lição já existe.")
+            print(f"A lição já existe: {filename}")
             return
 
         with open(
             filepath,
             "w",
-            encoding="utf-8",
             newline="",
+            encoding="utf-8",
         ) as f:
 
-            f.write(
-                "id,english,portuguese\n"
-            )
+            writer = csv.writer(f)
 
-            f.write("1,,\n")
+            writer.writerow([
+                "id",
+                "english",
+                "portuguese",
+            ])
 
-        print()
-
-        print(f"✅ Lição criada: {filename}")
-
-        print(filepath)
+        print(f"Lição criada com sucesso:\n{filepath}")
