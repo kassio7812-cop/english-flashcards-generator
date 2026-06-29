@@ -250,3 +250,11 @@ anki/
 settings/
 
 scripts/
+
+Criar uma lição
+
+python main.py --new 008_animals
+
+Gerar flashcards
+
+python main.py --all
