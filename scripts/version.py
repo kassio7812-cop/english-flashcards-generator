@@ -1,2 +1,2 @@
 APP_NAME = "English Flashcards Generator"
-VERSION = "1.3.0"
+VERSION = "v1.3.0"

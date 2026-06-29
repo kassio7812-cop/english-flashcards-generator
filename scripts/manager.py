@@ -51,7 +51,7 @@ class FlashcardManager:
         Console.title(APP_NAME)
 
         Console.info(
-            f"Version : {VERSION}"
+            f"Version: {VERSION}"
         )
 
         self.stats.start()
@@ -76,7 +76,7 @@ class FlashcardManager:
         Console.separator()
 
         Console.info(
-            f"Lições: {self.stats.lessons}"
+            f"Lições encontradas: {self.stats.lessons}"
         )
 
         Console.separator()
@@ -122,6 +122,18 @@ class FlashcardManager:
     # --------------------------------------------------
 
     def summary(self):
+
+     if (
+        self.stats.generated == 0
+        and self.stats.skipped > 0
+
+     ):
+            
+        Console.success(
+             "Todos os áudios já existem."
+        )
+
+        Console.line()
 
         Console.title("RESUMO")
 

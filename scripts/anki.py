@@ -25,72 +25,50 @@ class AnkiGenerator:
     # -------------------------------------------------
 
     def generate(self, lessons):
-        
+
         ANKI_DIR.mkdir(
             parents=True,
             exist_ok=True,
         )
 
-        Logger.info(
-            "Gerando arquivos do Anki."
-        )
+        Logger.info("Gerando arquivos do Anki.")
 
         for lesson in lessons:
-
-            self.generate_lesson(
-                lesson
-            )
+            self.generate_lesson(lesson)
 
     # -------------------------------------------------
 
     def generate_lesson(self, lesson):
 
-        filename = csv_import_filename(
-            lesson.name
-        )
+        filename = csv_import_filename(lesson.name)
 
         filepath = ANKI_DIR / filename
 
         with open(
-
             filepath,
-
             "w",
-
             newline="",
-
             encoding="utf-8",
-
         ) as csvfile:
 
             writer = csv.writer(csvfile)
 
             writer.writerow([
-
                 "English",
-
                 "Portuguese",
-
                 "Audio",
-
+                "Lesson",
             ])
 
             for phrase in lesson:
 
                 writer.writerow([
-
                     phrase.english,
-
                     phrase.portuguese,
-
-                    mp3_filename(
-                        phrase.id
-                    ),
-
+                    f"[sound:{mp3_filename(phrase.id)}]",
+                    lesson.name,
                 ])
 
         self.stats.anki_files += 1
 
-        Logger.info(
-            f"CSV criado: {filename}"
-        )
+        Logger.info(f"CSV criado: {filename}")
